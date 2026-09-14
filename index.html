@@ -1,376 +1,1353 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday ❤️</title>
 
-  <title>Please Maaf Kar Do ❤️</title>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      width: 100%;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop')
-        no-repeat center center/cover;
-      background-size: cover;
-      position: relative;
-      touch-action: none;
-    }
-
-    body::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.45);
-      backdrop-filter: blur(4px);
-    }
-
-    .popup {
-      position: relative;
-      z-index: 5;
-      width: 90%;
-      max-width: 390px;
-      background: #fff;
-      border-radius: 24px;
-      padding: 30px 22px;
-      text-align: center;
-      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
-    }
-
-    h1 {
-      font-size: 30px;
-      margin-bottom: 15px;
-      color: #222;
-    }
-
-    p {
-      font-size: 18px;
-      line-height: 1.5;
-      color: #555;
-      margin-bottom: 35px;
-    }
-
-    .buttons {
-      position: relative;
-      height: 150px;
-    }
-
-    button {
-      border: none;
-      padding: 14px 32px;
-      border-radius: 14px;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      position: absolute;
-    }
-
-    #yesBtn {
-      background: #22c55e;
-      color: #fff;
-      left: 25px;
-      bottom: 10px;
-      transition: 0.2s;
-    }
-
-    #yesBtn:active {
-      transform: scale(0.92);
-    }
-
-    #noBtn {
-      background: #ef4444;
-      color: #fff;
-      right: 25px;
-      top: 10px;
-      transition: 0.03s linear;
-      z-index: 999;
-    }
-
-    .views {
-      margin-top: 20px;
-      font-size: 18px;
-      font-weight: bold;
-      color: #333;
-    }
-
-    /* SUCCESS SCREEN */
-
-    .success-screen {
-      position: fixed;
-      inset: 0;
-      background: #fff;
-      z-index: 99999;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      opacity: 0;
-      visibility: hidden;
-      transition: 0.4s;
-      padding: 20px;
-      text-align: center;
-    }
-
-    .success-screen.show {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .success-screen h2 {
-      font-size: 42px;
-      color: #16a34a;
-      margin-bottom: 15px;
-    }
-
-    .success-screen p {
-      font-size: 22px;
-      color: #333;
-      margin-bottom: 20px;
-    }
-
-    .timer {
-      font-size: 26px;
-      font-weight: bold;
-      color: #ef4444;
-      margin-bottom: 20px;
-    }
-
-    .yes-count {
-      font-size: 24px;
-      font-weight: bold;
-      color: #111;
-      background: #f3f4f6;
-      padding: 14px 24px;
-      border-radius: 16px;
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 26px;
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
 
-      p {
-        font-size: 16px;
+      html {
+        scroll-behavior: smooth;
       }
 
-      button {
-        font-size: 16px;
-        padding: 13px 26px;
+      body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background:
+          radial-gradient(circle at top left, #ffe4ec 0%, transparent 35%),
+          radial-gradient(circle at bottom right, #ffd6e5 0%, transparent 35%),
+          linear-gradient(135deg, #fff5f8, #ffeaf1);
+        color: #4a2634;
+        overflow-x: hidden;
       }
 
-      .success-screen h2 {
-        font-size: 34px;
-      }
+      /* ---------------- FLOATING HEARTS ---------------- */
 
-      .success-screen p {
+      .heart {
+        position: fixed;
+        bottom: -50px;
         font-size: 20px;
+        opacity: 0.65;
+        animation: floatHeart linear infinite;
+        pointer-events: none;
+        z-index: 1;
       }
 
-      .yes-count {
-        font-size: 20px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <!-- MAIN POPUP -->
-
-  <div class="popup">
-
-    <h1>Please Maaf Kar Do ❤️</h1>
-
-    <p>
-      Ek baar soch lo 😔
-    </p>
-
-    <div class="buttons">
-
-      <button id="yesBtn">
-        Kar Diya ❤️
-      </button>
-
-      <button id="noBtn">
-        Nahi Karu 😜
-      </button>
-
-    </div>
-
-    <div class="views">
-      Site Opened:
-      <span id="viewCount">0</span>
-      times
-    </div>
-
-  </div>
-
-  <!-- SUCCESS SCREEN -->
-
-  <div class="success-screen" id="successScreen">
-
-    <h2>Thank You ❤️🥺</h2>
-
-    <p>
-      Aapne Maaf Kar Diya 😍
-    </p>
-
-    <div class="timer">
-      Returning in
-      <span id="timer">15</span>s
-    </div>
-
-    <div class="yes-count">
-      Maaf Count:
-      <span id="yesCount">0</span>
-    </div>
-
-  </div>
-
-  <script>
-
-    const noBtn = document.getElementById('noBtn');
-    const yesBtn = document.getElementById('yesBtn');
-
-    const successScreen = document.getElementById('successScreen');
-
-    const timerText = document.getElementById('timer');
-
-    const viewCount = document.getElementById('viewCount');
-
-    const yesCountText = document.getElementById('yesCount');
-
-    // -------- FAST NO BUTTON --------
-
-    function moveButton() {
-
-      const maxX = window.innerWidth - noBtn.offsetWidth;
-
-      const maxY = window.innerHeight - noBtn.offsetHeight;
-
-      const randomX = Math.floor(Math.random() * maxX);
-
-      const randomY = Math.floor(Math.random() * maxY);
-
-      noBtn.style.position = 'fixed';
-
-      noBtn.style.left = randomX + 'px';
-
-      noBtn.style.top = randomY + 'px';
-
-      const rotate = Math.floor(Math.random() * 360);
-
-      noBtn.style.transform = `rotate(${rotate}deg) scale(1.1)`;
-    }
-
-    // MOBILE TOUCH
-
-    noBtn.addEventListener('touchstart', function (e) {
-
-      e.preventDefault();
-
-      moveButton();
-
-    });
-
-    // DESKTOP
-
-    noBtn.addEventListener('mouseenter', moveButton);
-
-    // EXTRA FAST ESCAPE
-
-    document.addEventListener('touchmove', moveButton);
-
-    document.addEventListener('mousemove', function (e) {
-
-      const rect = noBtn.getBoundingClientRect();
-
-      const distanceX = Math.abs(e.clientX - rect.left);
-
-      const distanceY = Math.abs(e.clientY - rect.top);
-
-      if (distanceX < 120 && distanceY < 120) {
-
-        moveButton();
-
-      }
-
-    });
-
-    // -------- YES CLICK --------
-
-    let yesCount = localStorage.getItem('yesCount');
-
-    if (yesCount === null) {
-
-      yesCount = 0;
-
-    }
-
-    yesCountText.innerText = yesCount;
-
-    yesBtn.addEventListener('click', function () {
-
-      yesCount++;
-
-      localStorage.setItem('yesCount', yesCount);
-
-      yesCountText.innerText = yesCount;
-
-      successScreen.classList.add('show');
-
-      let seconds = 15;
-
-      timerText.innerText = seconds;
-
-      const countdown = setInterval(function () {
-
-        seconds--;
-
-        timerText.innerText = seconds;
-
-        if (seconds <= 0) {
-
-          clearInterval(countdown);
-
-          successScreen.classList.remove('show');
-
+      @keyframes floatHeart {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 0;
         }
 
-      }, 1000);
+        10% {
+          opacity: 0.7;
+        }
 
-    });
+        90% {
+          opacity: 0.7;
+        }
 
-    // -------- SITE OPEN COUNT --------
+        100% {
+          transform: translateY(-110vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
 
-    let count = localStorage.getItem('siteCount');
+      /* ---------------- HERO ---------------- */
 
-    if (count === null) {
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 40px 20px;
+        position: relative;
+        z-index: 2;
+      }
 
-      count = 1;
+      .hero-content {
+        max-width: 850px;
+      }
 
-    } else {
+      .cake {
+        font-size: 80px;
+        animation: cakeBounce 2s ease-in-out infinite;
+        margin-bottom: 20px;
+      }
 
-      count = Number(count) + 1;
+      @keyframes cakeBounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
 
-    }
+        50% {
+          transform: translateY(-12px);
+        }
+      }
 
-    localStorage.setItem('siteCount', count);
+      .hero h1 {
+        font-size: clamp(42px, 8vw, 82px);
+        color: #e84a7c;
+        margin-bottom: 15px;
+        line-height: 1.1;
+      }
 
-    viewCount.innerText = count;
+      .hero-subtitle {
+        font-size: clamp(18px, 3vw, 27px);
+        color: #744454;
+        margin-bottom: 25px;
+      }
 
-  </script>
+      .typing {
+        min-height: 35px;
+        font-size: 20px;
+        color: #c73569;
+        font-weight: 600;
+        margin-bottom: 35px;
+      }
 
-</body>
+      .main-button {
+        border: none;
+        padding: 15px 30px;
+        border-radius: 50px;
+        background: linear-gradient(135deg, #ec5b89, #d93870);
+        color: white;
+        font-size: 17px;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 10px 25px rgba(216, 56, 112, 0.25);
+        transition: 0.3s ease;
+      }
+
+      .main-button:hover {
+        transform: translateY(-3px) scale(1.03);
+        box-shadow: 0 15px 30px rgba(216, 56, 112, 0.35);
+      }
+
+      /* ---------------- COMMON SECTION ---------------- */
+
+      section {
+        position: relative;
+        z-index: 2;
+        padding: 80px 20px;
+      }
+
+      .section-container {
+        max-width: 1150px;
+        margin: auto;
+      }
+
+      .section-title {
+        text-align: center;
+        color: #d83f72;
+        font-size: clamp(30px, 5vw, 46px);
+        margin-bottom: 15px;
+      }
+
+      .section-description {
+        text-align: center;
+        max-width: 700px;
+        margin: 0 auto 45px;
+        color: #765362;
+        font-size: 17px;
+        line-height: 1.7;
+      }
+
+      /* ---------------- LOVE CARDS ---------------- */
+
+      .love-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+      }
+
+      .love-card {
+        background: rgba(255, 255, 255, 0.78);
+        border: 1px solid rgba(231, 89, 133, 0.15);
+        border-radius: 22px;
+        padding: 28px;
+        text-align: center;
+        box-shadow: 0 12px 35px rgba(151, 54, 92, 0.08);
+        transition: 0.3s ease;
+      }
+
+      .love-card:hover {
+        transform: translateY(-7px);
+        box-shadow: 0 18px 40px rgba(151, 54, 92, 0.14);
+      }
+
+      .love-card .emoji {
+        font-size: 42px;
+        margin-bottom: 15px;
+      }
+
+      .love-card h3 {
+        color: #d64173;
+        margin-bottom: 10px;
+      }
+
+      .love-card p {
+        color: #73505d;
+        line-height: 1.7;
+      }
+
+      /* ---------------- MEMORIES / GALLERY SLIDER ---------------- */
+
+      .gallery-wrapper {
+        position: relative;
+        width: 100%;
+      }
+
+      .gallery-slider {
+        display: flex;
+        gap: 24px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-behavior: smooth;
+        scroll-snap-type: x mandatory;
+        padding: 15px 5px 30px;
+        cursor: grab;
+
+        /* Hide scrollbar */
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      .gallery-slider::-webkit-scrollbar {
+        display: none;
+      }
+
+      .gallery-slider.dragging {
+        cursor: grabbing;
+        scroll-behavior: auto;
+        scroll-snap-type: none;
+      }
+
+      .gallery-card {
+        flex: 0 0 330px;
+        scroll-snap-align: center;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 24px;
+        padding: 14px;
+        box-shadow: 0 15px 35px rgba(151, 54, 92, 0.12);
+        border: 1px solid rgba(231, 89, 133, 0.15);
+        transition: transform 0.3s ease;
+      }
+
+      .gallery-card:hover {
+        transform: translateY(-6px);
+      }
+
+      /*
+      IMPORTANT:
+      The image uses contain instead of cover.
+      This means the complete photo stays visible
+      and will NOT be cropped.
+    */
+      .gallery-image-wrapper {
+        width: 100%;
+        height: 360px;
+        border-radius: 18px;
+        overflow: hidden;
+        background: #fff7fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .gallery-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+        display: block;
+        border-radius: 18px;
+        user-select: none;
+        -webkit-user-drag: none;
+      }
+
+      .gallery-info {
+        text-align: center;
+        padding: 17px 8px 8px;
+      }
+
+      .gallery-info h3 {
+        color: #d83f72;
+        margin-bottom: 12px;
+        font-size: 20px;
+      }
+
+      .view-button {
+        border: none;
+        background: #f15b88;
+        color: white;
+        padding: 10px 22px;
+        border-radius: 30px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.25s ease;
+      }
+
+      .view-button:hover {
+        background: #d93c70;
+        transform: scale(1.04);
+      }
+
+      /* Slider buttons */
+
+      .slider-button {
+        position: absolute;
+        top: 45%;
+        transform: translateY(-50%);
+        width: 48px;
+        height: 48px;
+        border: none;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.95);
+        color: #d83f72;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 5;
+        box-shadow: 0 8px 25px rgba(100, 40, 60, 0.18);
+        transition: 0.25s ease;
+      }
+
+      .slider-button:hover {
+        transform: translateY(-50%) scale(1.08);
+        background: #fff;
+      }
+
+      .slider-left {
+        left: -20px;
+      }
+
+      .slider-right {
+        right: -20px;
+      }
+
+      .slider-hint {
+        text-align: center;
+        color: #a46a7b;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+
+      .slider-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 18px;
+      }
+
+      .slider-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #e8a5b9;
+        transition: 0.3s ease;
+      }
+
+      .slider-dot.active {
+        width: 24px;
+        border-radius: 10px;
+        background: #df4778;
+      }
+
+      /* ---------------- SORRY SECTION ---------------- */
+
+      .sorry-section {
+        text-align: center;
+      }
+
+      .sorry-section {
+        max-width: 950px;
+        margin: 0 auto 50px;
+      }
+      .sorry-card {
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+        padding: 48px 24px;
+        border-radius: 30px;
+        background: linear-gradient(135deg, #fff, #ffe0ef);
+        box-shadow: 0 18px 45px #a62f7025;
+        border: 2px solid #fff;
+      }
+      .sorry-card::before,
+      .sorry-card::after {
+        content: '💗';
+        position: absolute;
+        font-size: 80px;
+        opacity: 0.18;
+        animation: pulse 2s infinite;
+      }
+      .sorry-card::before {
+        left: 4%;
+        top: 10%;
+      }
+      .sorry-card::after {
+        right: 4%;
+        bottom: 5%;
+        animation-delay: 0.8s;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.25);
+        }
+      }
+      .sorry-card h2 {
+        font-size: clamp(30px, 5vw, 48px);
+        margin: 0 0 18px;
+        color: #c72d7c;
+      }
+      .sorry-card p {
+        max-width: 650px;
+        margin: 0 auto 25px;
+        font-size: 18px;
+        line-height: 1.8;
+      }
+      .sorry-note {
+        display: none;
+        margin: 25px auto 0;
+        max-width: 650px;
+        padding: 20px;
+        border-radius: 18px;
+        background: #ffffffcc;
+        animation: reveal 0.7s ease both;
+        line-height: 1.7;
+      }
+      .sorry-note.show {
+        display: block;
+      }
+      footer {
+        text-align: center;
+        padding: 35px 15px;
+        color: #9b4a78;
+        position: relative;
+        z-index: 1;
+      }
+      .modal {
+        position: fixed;
+        inset: 0;
+        background: #3a123d99;
+        display: none;
+        place-items: center;
+        padding: 18px;
+        z-index: 10;
+        backdrop-filter: blur(8px);
+      }
+      .modal.open {
+        display: grid;
+      }
+      .modal-content {
+        width: min(94vw, 720px);
+        max-height: 94vh;
+        overflow-y: auto;
+        background: #fff8fc;
+        border-radius: 28px;
+        padding: 18px;
+        position: relative;
+        box-shadow: 0 25px 80px #2d092d66;
+        animation: modalIn 0.35s ease both;
+      }
+      @keyframes modalIn {
+        from {
+          opacity: 0;
+          transform: scale(0.85) translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+      .close {
+        position: absolute;
+        right: 15px;
+        top: 12px;
+        width: 38px;
+        height: 38px;
+        border: 0;
+        border-radius: 50%;
+        background: #ffe0ef;
+        color: #a3266d;
+        font-size: 25px;
+        cursor: pointer;
+        z-index: 2;
+      }
+      .modal-image {
+        width: 100%;
+        max-height: 58vh;
+        object-fit: contain;
+        border-radius: 20px;
+        background: #ffe6f2;
+      }
+      .modal h3 {
+        text-align: center;
+        color: #b32974;
+        font-size: 26px;
+        margin: 18px 0 12px;
+      }
+      .modal ul {
+        margin: 0;
+        padding-left: 24px;
+        line-height: 1.8;
+      }
+      @media (max-width: 600px) {
+        .hero {
+          min-height: 82vh;
+        }
+        .photo-card {
+          flex-basis: 200px;
+        }
+        .photo-card img {
+          height: 235px;
+        }
+        section {
+          padding: 52px 14px;
+        }
+      }
+      /* ---------------- MODAL ---------------- */
+
+      .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(55, 20, 35, 0.72);
+        backdrop-filter: blur(8px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        z-index: 1000;
+      }
+
+      .modal.show {
+        display: flex;
+      }
+
+      .modal-content {
+        width: min(900px, 100%);
+        max-height: 92vh;
+        overflow-y: auto;
+        background: #fff8fb;
+        border-radius: 28px;
+        padding: 25px;
+        position: relative;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+        animation: modalIn 0.3s ease;
+      }
+
+      @keyframes modalIn {
+        from {
+          opacity: 0;
+          transform: translateY(25px) scale(0.97);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .close-modal {
+        position: absolute;
+        right: 18px;
+        top: 15px;
+        width: 40px;
+        height: 40px;
+        border: none;
+        border-radius: 50%;
+        background: #ffe0ea;
+        color: #c72e64;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 10;
+      }
+
+      .modal-image-container {
+        width: 100%;
+        height: min(55vh, 500px);
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 25px;
+      }
+
+      /* Full image visible inside modal */
+      .modal-image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+        display: block;
+      }
+
+      .modal-title {
+        color: #d83f72;
+        text-align: center;
+        font-size: 30px;
+        margin-bottom: 18px;
+      }
+
+      .memory-text {
+        max-width: 750px;
+        margin: auto;
+        text-align: center;
+        font-size: 18px;
+        line-height: 1.9;
+        color: #684652;
+        white-space: pre-line;
+        padding: 0 10px 15px;
+      }
+
+      /* ---------------- RESPONSIVE ---------------- */
+
+      @media (max-width: 900px) {
+        .love-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .slider-left {
+          left: 5px;
+        }
+
+        .slider-right {
+          right: 5px;
+        }
+      }
+
+      @media (max-width: 650px) {
+        section {
+          padding: 60px 15px;
+        }
+
+        .love-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .gallery-card {
+          flex: 0 0 82vw;
+        }
+
+        .gallery-image-wrapper {
+          height: 380px;
+        }
+
+        .slider-button {
+          width: 42px;
+          height: 42px;
+          font-size: 20px;
+        }
+
+        .slider-left {
+          left: 3px;
+        }
+
+        .slider-right {
+          right: 3px;
+        }
+
+        .modal-content {
+          padding: 15px;
+          border-radius: 22px;
+        }
+
+        .modal-image-container {
+          height: 45vh;
+        }
+
+        .modal-title {
+          font-size: 24px;
+        }
+
+        .memory-text {
+          font-size: 16px;
+          line-height: 1.8;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Floating Hearts -->
+    <div class="heart" style="left: 5%; animation-duration: 9s; animation-delay: 1s">❤️</div>
+    <div class="heart" style="left: 15%; animation-duration: 12s; animation-delay: 3s">💗</div>
+    <div class="heart" style="left: 28%; animation-duration: 10s; animation-delay: 5s">💕</div>
+    <div class="heart" style="left: 42%; animation-duration: 14s; animation-delay: 2s">💖</div>
+    <div class="heart" style="left: 58%; animation-duration: 11s; animation-delay: 4s">❤️</div>
+    <div class="heart" style="left: 72%; animation-duration: 13s; animation-delay: 1s">💗</div>
+    <div class="heart" style="left: 88%; animation-duration: 10s; animation-delay: 6s">💕</div>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="cake">🎂</div>
+
+        <h1>Happy Birthday ❤️</h1>
+
+        <p class="hero-subtitle">To the most special person in my life ✨</p>
+
+        <div class="typing" id="typingText"></div>
+
+        <button
+          class="main-button"
+          onclick="document.getElementById('memories').scrollIntoView({ behavior: 'smooth' })"
+        >
+          Open Your Memories ✨
+        </button>
+      </div>
+    </section>
+
+    <!-- LOVE SECTION -->
+    <section>
+      <div class="section-container">
+        <h2 class="section-title">A Little Birthday Love 💌</h2>
+
+        <p class="section-description">
+          Some things are difficult to explain in words, but these little things make you so
+          special.
+        </p>
+
+        <div class="love-grid">
+          <div class="love-card">
+            <div class="emoji">❤️</div>
+            <h3>Your Smile</h3>
+            <p>Tumhari smile meri favourite cheezon mein se ek hai.</p>
+          </div>
+
+          <div class="love-card">
+            <div class="emoji">✨</div>
+            <h3>Your Presence</h3>
+            <p>Tumhare saath simple moments bhi special ban jaate hain.</p>
+          </div>
+
+          <div class="love-card">
+            <div class="emoji">🌸</div>
+            <h3>Your Heart</h3>
+            <p>Tumhara caring nature tumhe aur bhi special banata hai.</p>
+          </div>
+
+          <div class="love-card">
+            <div class="emoji">🥰</div>
+            <h3>Your Laugh</h3>
+            <p>Tumhari hasi sunna apne aap mein ek alag happiness hai.</p>
+          </div>
+
+          <div class="love-card">
+            <div class="emoji">🌙</div>
+            <h3>Our Moments</h3>
+            <p>Tumhare saath bitaya hua har moment apni ek story rakhta hai.</p>
+          </div>
+
+          <div class="love-card">
+            <div class="emoji">💖</div>
+            <h3>You</h3>
+            <p>Bas tum ho, aur mere liye wahi sabse important hai.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEMORIES -->
+    <section id="memories">
+      <div class="section-container">
+        <h2 class="section-title">Our Little Gallery 📸</h2>
+
+        <p class="section-description">
+          Har photo ke peeche ek memory hai. Kisi ko bhi open karo aur dekho uske peeche kya chhupa
+          hai. 💗
+        </p>
+
+        <div class="gallery-wrapper">
+          <button
+            class="slider-button slider-left"
+            onclick="scrollGallery(-1)"
+            aria-label="Previous memory"
+          >
+            ❮
+          </button>
+
+          <div class="gallery-slider" id="gallerySlider">
+            <!-- PHOTO 1 -->
+            <div class="gallery-card">
+              <div class="gallery-image-wrapper">
+                <img src="images/1.png" alt="Memory 1" />
+              </div>
+
+              <div class="gallery-info">
+                <h3>Memory 1 💗</h3>
+                <button class="view-button" onclick="openModal(1)">View 💗</button>
+              </div>
+            </div>
+
+            <!-- PHOTO 2 -->
+            <div class="gallery-card">
+              <div class="gallery-image-wrapper">
+                <img src="images/2.png" alt="Memory 2" />
+              </div>
+
+              <div class="gallery-info">
+                <h3>Memory 2 💗</h3>
+                <button class="view-button" onclick="openModal(2)">View 💗</button>
+              </div>
+            </div>
+
+            <!-- PHOTO 3 -->
+            <div class="gallery-card">
+              <div class="gallery-image-wrapper">
+                <img src="images/3.png" alt="Memory 3" />
+              </div>
+
+              <div class="gallery-info">
+                <h3>Memory 3 💗</h3>
+                <button class="view-button" onclick="openModal(3)">View 💗</button>
+              </div>
+            </div>
+
+            <!-- PHOTO 4 -->
+            <div class="gallery-card">
+              <div class="gallery-image-wrapper">
+                <img src="images/4.png" alt="Memory 4" />
+              </div>
+
+              <div class="gallery-info">
+                <h3>Memory 4 💗</h3>
+                <button class="view-button" onclick="openModal(4)">View 💗</button>
+              </div>
+            </div>
+
+            <!-- PHOTO 5 -->
+            <div class="gallery-card">
+              <div class="gallery-image-wrapper">
+                <img src="images/5.png" alt="Memory 5" />
+              </div>
+
+              <div class="gallery-info">
+                <h3>Memory 5 💗</h3>
+                <button class="view-button" onclick="openModal(5)">View 💗</button>
+              </div>
+            </div>
+
+            <!-- PHOTO 6 -->
+            <div class="gallery-card">
+              <div class="gallery-image-wrapper">
+                <img src="images/6.png" alt="Memory 6" />
+              </div>
+
+              <div class="gallery-info">
+                <h3>Memory 6 💗</h3>
+                <button class="view-button" onclick="openModal(6)">View 💗</button>
+              </div>
+            </div>
+
+            <!-- PHOTO 7 -->
+            <div class="gallery-card">
+              <div class="gallery-image-wrapper">
+                <img src="images/7.png" alt="Memory 7" />
+              </div>
+
+              <div class="gallery-info">
+                <h3>Memory 7 💗</h3>
+                <button class="view-button" onclick="openModal(7)">View 💗</button>
+              </div>
+            </div>
+
+            <!-- PHOTO 8 -->
+            <div class="gallery-card">
+              <div class="gallery-image-wrapper">
+                <img src="images/8.png" alt="Memory 8" />
+              </div>
+
+              <div class="gallery-info">
+                <h3>Memory 8 💗</h3>
+                <button class="view-button" onclick="openModal(8)">View 💗</button>
+              </div>
+            </div>
+
+            <!-- PHOTO 9 -->
+            <div class="gallery-card">
+              <div class="gallery-image-wrapper">
+                <img src="images/9.png" alt="Memory 9" />
+              </div>
+
+              <div class="gallery-info">
+                <h3>Memory 9 💗</h3>
+                <button class="view-button" onclick="openModal(9)">View 💗</button>
+              </div>
+            </div>
+
+            <!-- PHOTO 10 -->
+            <div class="gallery-card">
+              <div class="gallery-image-wrapper">
+                <img src="images/10.png" alt="Memory 10" />
+              </div>
+
+              <div class="gallery-info">
+                <h3>Memory 10 💗</h3>
+                <button class="view-button" onclick="openModal(10)">View 💗</button>
+              </div>
+            </div>
+          </div>
+
+          <button
+            class="slider-button slider-right"
+            onclick="scrollGallery(1)"
+            aria-label="Next memory"
+          >
+            ❯
+          </button>
+        </div>
+
+        <div class="slider-hint">← Swipe / scroll to see all memories →</div>
+
+        <div class="slider-dots" id="sliderDots"></div>
+      </div>
+    </section>
+
+    <!-- SORRY SECTION -->
+    <section class="sorry-section">
+      <div class="sorry-card">
+        <h2>A Little Sorry From My Heart 🥺</h2>
+        <p>
+          If I have ever hurt you, annoyed you, or made you feel less loved than you deserve, I am
+          truly sorry. You mean so much to me, and I never want my mistakes to hide how deeply I
+          care about you.
+        </p>
+        <button class="button" id="sorryButton" onclick="showSorry()">
+          Read My Heartfelt Message 💞
+        </button>
+        <div class="sorry-note" id="sorryNote">
+          I may not always say or do everything perfectly, but my feelings for you are sincere. I am
+          learning, growing, and trying to become better every day. Thank you for your patience,
+          your smile, and for being you. I am sorry, and I hope this birthday brings you all the
+          happiness you bring into my life. <br /><br /><strong
+            >Happy Birthday once again. You are truly precious to me. ❤️</strong
+          >
+        </div>
+      </div>
+    </section>
+    <footer>Made with endless love, warm wishes, and a little bit of magic ✨</footer>
+
+    <!-- MODAL -->
+    <div class="modal" id="memoryModal">
+      <div class="modal-content">
+        <button class="close-modal" onclick="closeModal()" aria-label="Close">×</button>
+
+        <div class="modal-image-container">
+          <img id="modalImage" src="" alt="Memory" />
+        </div>
+
+        <h2 class="modal-title">Our Memory 💖</h2>
+
+        <p class="memory-text" id="memoryText"></p>
+      </div>
+    </div>
+
+    <script>
+      /* ---------------- TYPING ---------------- */
+
+      const typingMessages = [
+        'You deserve all the happiness in the world ❤️',
+        'Every moment with you becomes a memory 💗',
+        'Happy Birthday to someone truly special ✨',
+        'I hope this little surprise makes you smile 🥰',
+      ];
+
+      let typingIndex = 0;
+      let characterIndex = 0;
+      let deleting = false;
+
+      const typingElement = document.getElementById('typingText');
+
+      function typeText() {
+        const currentMessage = typingMessages[typingIndex];
+
+        if (!deleting) {
+          typingElement.textContent = currentMessage.substring(0, characterIndex + 1);
+
+          characterIndex++;
+
+          if (characterIndex === currentMessage.length) {
+            deleting = true;
+
+            setTimeout(typeText, 1800);
+            return;
+          }
+
+          setTimeout(typeText, 70);
+        } else {
+          typingElement.textContent = currentMessage.substring(0, characterIndex - 1);
+
+          characterIndex--;
+
+          if (characterIndex === 0) {
+            deleting = false;
+            typingIndex = (typingIndex + 1) % typingMessages.length;
+          }
+
+          setTimeout(typeText, 40);
+        }
+      }
+
+      typeText();
+
+      /* ---------------- MEMORIES ---------------- */
+
+      const memories = {
+        1: `
+4 Oct jab hum mile the...
+Kitna ghume the, kitna maja aaya tha.
+Vo pura din jitna amazing tha,
+raat to usse bhi zyada amazing thi.
+
+Vo recordings...
+Tu samajh bhi raha hai main kya keh rahi hoon? 😂
+
+Aur vo uss din ki baat...
+Subah jitni jordaar thi,
+raat usse bhi zyada thi.
+Ye memory mere liye hamesha special rahegi. ❤️
+      `,
+
+        2: `
+Vo tere haath ke chole bhature...
+Pehli baar koi mere liye kuch bana ke laya tha.
+Tu khud baad mein khaya,
+par mere liye vo gesture hi bahut special tha.
+
+Usse pehle hum saath mein darshan ke liye gaye,
+uske baad vo chand,
+uske neeche hum dono ka saath baithna,
+tera vo sir mere kandhe pe...
+
+Aur tera vo sawaal:
+"Aap merko chhod ke jaoge to nahi?"
+
+Vo moment kabhi nahi bhool sakti. ❤️
+      `,
+
+        3: `
+Jab hum JNU hospital gaye the...
+
+Vo jo tune sun ke hasa tha:
+"Kamlesh kya keh raha tha,
+tere paas time nahi hai."
+
+Teri vo hasi mere dil mein basi hui hai.
+Aaj bhi uss hasi ko sochti hoon
+to khud bahut tez hasi aa jaati hai. 😂❤️
+
+Kuch hasi aisi hoti hain
+jo bas yaad banke reh jaati hain.
+      `,
+
+        4: `
+Vo car wali conversation...
+
+"I love you itna jitna ye peeche wala aake
+merko maar de." 😂❤️
+
+Vo din meri life ki sabse best long drives mein se ek tha.
+Kitna ghume the,
+kitne maje kiye the,
+sab kuch kitna awesome tha.
+
+Vo meri life ke bahut best days mein se ek hai. ❤️
+      `,
+
+        5: `
+Exam mein tujhe padhana...
+Par main reason kuch aur hi hota tha. 😂
+
+Mera main motive hota tha
+ki main tere saath zyada se zyada
+late tak time spend kar saku.
+
+Aur vo time bhi kitni jaldi nikal jaata tha.
+Lagta tha abhi to aaye the,
+par ab jaana padega...
+
+"Mummy maregi." 😂
+
+Phir time pass karke ghar aana
+aur phir padhna.
+
+Exam ke beech ke vo moments
+mere favourite memories mein hain. ❤️
+      `,
+
+        6: `
+Holi special...
+
+Vo raat,
+vo chand ki roshni,
+aur jis tarah tu bhaag ke utar ke aayi...
+
+Phir hum mile.
+2 minute bhi nahi the pure,
+par pata nahi kyun aisa lagta hai
+jaise aaj bhi aankhein band karun
+to exactly wahi moment feel kar sakti hoon.
+
+Sirf 2 minute the,
+par mere liye bahut precious the. 🌙❤️
+      `,
+
+        7: `
+Tu ye mat sochna ki ye photo alag
+aur kahani alag hai. 😂
+
+Saath ki koi specific photo nahi lagani thi,
+bas meri favourite photo lagani thi. ❤️
+
+Isse yaad aaya tera vo zabaan fisalna...
+
+"Cheene kha ke..."
+
+Aur:
+"Time nahi hobo tobo kar debo tobo." 😂
+
+Teri ye choti-choti funny baatein
+bhi meri favourite memories ka part hain.
+      `,
+
+        8: `
+Waise to bahut saare kisse hain,
+par kuch gine-chune hi likh rahi hoon.
+
+Tere saath ghoomna...
+Chahe scooty ho,
+car ho,
+ya paidal...
+
+Haath haath mein hone chahiye,
+aankhein milti rehni chahiye,
+aur teri khushbu...
+
+Yaar,
+tu mere jeevan ka sabse keemti part ban gaya hai.
+
+Ab please kabhi mat jaana. ❤️
+      `,
+
+        9: `
+Teri bhaduri...
+Jaise abhi tune rabdi di thi,
+waise hi tu hamesha mere saath diya hai.
+
+Tu best hai yaar. ❤️
+
+Thank you so much
+mere jeevan mein aane ke liye.
+
+Tera saath,
+teri care,
+aur tera hona mere liye
+bahut precious hai. 🥰
+      `,
+
+        10: `
+Aur sabse important...
+
+Vo log jinki wajah se tu is duniya mein hai. ❤️
+
+Unke saath bhi tere,
+mere aur humare bahut saare kisse hain.
+
+"Teri tabiyat kab kharab hui?"
+
+"Isliye main isko phone nahi dila rahi."
+
+"Aur tera ID card kahan hai?
+Tu le aaya?"
+
+Ye choti-choti baatein bhi
+humari kahani ka part hain.
+
+Kyuki jin logon ki wajah se
+tu meri life mein hai,
+unke liye bhi mere dil mein
+bahut respect aur pyaar hai. ❤️
+      `,
+      };
+
+      /* ---------------- MODAL ---------------- */
+
+      const modal = document.getElementById('memoryModal');
+      const modalImage = document.getElementById('modalImage');
+      const memoryText = document.getElementById('memoryText');
+
+      function openModal(number) {
+        modalImage.src = `images/${number}.png`;
+
+        memoryText.textContent = memories[number].trim();
+
+        modal.classList.add('show');
+
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        modal.classList.remove('show');
+
+        document.body.style.overflow = '';
+      }
+
+      modal.addEventListener('click', function (event) {
+        if (event.target === modal) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+          closeModal();
+        }
+      });
+
+      /* ---------------- GALLERY SLIDER ---------------- */
+
+      const gallerySlider = document.getElementById('gallerySlider');
+
+      function scrollGallery(direction) {
+        const card = gallerySlider.querySelector('.gallery-card');
+
+        if (!card) return;
+
+        const cardWidth = card.getBoundingClientRect().width;
+
+        const gap = 24;
+
+        gallerySlider.scrollBy({
+          left: direction * (cardWidth + gap),
+          behavior: 'smooth',
+        });
+      }
+
+      /* ---------------- SLIDER DOTS ---------------- */
+
+      const sliderDots = document.getElementById('sliderDots');
+
+      const galleryCards = document.querySelectorAll('.gallery-card');
+
+      galleryCards.forEach((_, index) => {
+        const dot = document.createElement('div');
+
+        dot.className = 'slider-dot';
+
+        if (index === 0) {
+          dot.classList.add('active');
+        }
+
+        sliderDots.appendChild(dot);
+      });
+
+      const dots = document.querySelectorAll('.slider-dot');
+
+      gallerySlider.addEventListener('scroll', function () {
+        const card = gallerySlider.querySelector('.gallery-card');
+
+        if (!card) return;
+
+        const cardWidth = card.getBoundingClientRect().width + 24;
+
+        const currentIndex = Math.round(gallerySlider.scrollLeft / cardWidth);
+
+        dots.forEach((dot, index) => {
+          dot.classList.toggle('active', index === currentIndex);
+        });
+      });
+
+      /* ---------------- DRAG TO SCROLL ---------------- */
+
+      let isDragging = false;
+      let startX = 0;
+      let scrollStart = 0;
+
+      gallerySlider.addEventListener('mousedown', function (event) {
+        isDragging = true;
+
+        gallerySlider.classList.add('dragging');
+
+        startX = event.pageX - gallerySlider.offsetLeft;
+
+        scrollStart = gallerySlider.scrollLeft;
+      });
+
+      gallerySlider.addEventListener('mouseleave', function () {
+        isDragging = false;
+
+        gallerySlider.classList.remove('dragging');
+      });
+
+      gallerySlider.addEventListener('mouseup', function () {
+        isDragging = false;
+
+        gallerySlider.classList.remove('dragging');
+      });
+
+      gallerySlider.addEventListener('mousemove', function (event) {
+        if (!isDragging) return;
+
+        event.preventDefault();
+
+        const x = event.pageX - gallerySlider.offsetLeft;
+
+        const distance = (x - startX) * 1.5;
+
+        gallerySlider.scrollLeft = scrollStart - distance;
+      });
+
+      /* ---------------- TOUCH SUPPORT ---------------- */
+
+      let touchStartX = 0;
+      let touchStartScroll = 0;
+
+      gallerySlider.addEventListener(
+        'touchstart',
+        function (event) {
+          touchStartX = event.touches[0].pageX;
+
+          touchStartScroll = gallerySlider.scrollLeft;
+        },
+        { passive: true }
+      );
+
+      gallerySlider.addEventListener(
+        'touchmove',
+        function (event) {
+          const currentX = event.touches[0].pageX;
+
+          const distance = currentX - touchStartX;
+
+          gallerySlider.scrollLeft = touchStartScroll - distance;
+        },
+        { passive: true }
+      );
+
+      /* ---------------- SORRY ---------------- */
+
+      function showSorry() {
+        const note = document.getElementById('sorryNote');
+        note.classList.toggle('show');
+        document.getElementById('sorryButton').textContent = note.classList.contains('show')
+          ? 'Hide Message 💗'
+          : 'Read My Heartfelt Message 💞';
+      }
+    </script>
+  </body>
 </html>
